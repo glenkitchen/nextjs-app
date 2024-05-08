@@ -23,7 +23,7 @@ export default function RootLayout({
         <ThemeProvider>
           <div className="flex-row flex">
             <Sidebar />
-            <main className="p-24">{children}</main>
+            <main className="flex-grow p-4">{children}</main>
           </div>
         </ThemeProvider>
       </body>
