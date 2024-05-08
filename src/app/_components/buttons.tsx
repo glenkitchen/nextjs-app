@@ -7,9 +7,9 @@ export default function Buttons() {
   const { setTheme } = useTheme();
 
   return (
-    <>
+    <div className="flex gap-8">
       <Button onClick={() => setTheme("dark")}>Dark</Button>
       <Button onClick={() => setTheme("light")}>Light</Button>
-    </>
+    </div>
   );
 }
