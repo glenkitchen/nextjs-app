@@ -1,6 +1,6 @@
-# Ensource
+# Next.js CRUD app
 
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [` create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+This is a reference implementation of a [Next.js](https://nextjs.org/) CRUD application.
 
 The project is hosted [here](`https://engage-web-app.vercel.app/`) on [Vercel](https://vercel.com/).
 
@@ -34,9 +34,11 @@ Initiate [shadcn/ui](https://ui.shadcn.com/) and add all the [shadcn/ui](https:/
 Manual steps:
 
 - Copy/paste the [shadcn/ui Date Picker](https://ui.shadcn.com/docs/components/date-picker) component.
-- Copy/paste [shadcn/ui themes](https://ui.shadcn.com/docs/components/date-picker) into the `globals.css` file.
-- Add an `ag-grid.css` file that uses the [shadcn/ui CSS variables](https://ui.shadcn.com/docs/theming#css-variables) to theme [Ag Grid](https://ag-grid.com/).
-- `pnpm add @radix-ui/react-icons`
+
+### Theming & Dark mode
+
+- Use [next-themes](https://github.com/pacocoursey/next-themes#readme) to manage themes
+- [Dark mode](https://ui.shadcn.com/docs/dark-mode/next)
 
 ## Additional UI components
 
