@@ -3,7 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { useTheme } from "next-themes";
 
-export default function Buttons() {
+export default function ThemeButtons() {
   const { setTheme } = useTheme();
 
   return (
