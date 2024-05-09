@@ -1,18 +1,21 @@
-import { unstable_cache } from "next/cache";
+// TODO
+// next-auth
+// error
 
 class WebApi {
-  //TODO env variable
-  private baseUrl = "https://localhost:5001/api/";
+  private baseUrl = process.env.NEXT_PUBLIC_WEB_API_URL;
 
-  //TODO header bearer token
-  private rowData = async (url: string) => {
+  public getRowData = async (url: string) => {
     const response = await fetch(`${this.baseUrl}${url}`);
     const json = await response.json();
     return json?.data || [];
   };
 
-  public getRowData = unstable_cache(this.rowData);
-  //public getRowData = this.rowData;
+  public getData = async (url: string) => {
+    const response = await fetch(`${this.baseUrl}${url}`);
+    const json = await response.json();
+    return json || {};
+  };
 }
 
 export const webApi = new WebApi();
