@@ -15,6 +15,7 @@ export default function Sidebar() {
         <AccordionItem value="item-1">
           <AccordionTrigger>Admin</AccordionTrigger>
           <AccordionContent className="flex flex-col">
+            <Link href="/">Home</Link>
             <Link href="/regions">Regions</Link>
             <Link href="/suppliers">Suppliers</Link>
             <Link href="/warehouses">Warehouses</Link>

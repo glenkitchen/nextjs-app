@@ -1,10 +1,10 @@
 import { SignInButton } from "@/components/signin-button";
 import { UserButton } from "@/components/user-button";
-import { auth } from "@/lib/auth";
+import getSession from "@/utils/get-session";
 import ThemeButtons from "./_components/theme-buttons";
 
-export default async function Home() {
-  const session = await auth();
+export default async function Page() {
+  const session = await getSession();
   const user = session?.user;
 
   return (

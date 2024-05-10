@@ -4,9 +4,6 @@ import Okta from "next-auth/providers/okta";
 export const BASE_PATH = "/auth";
 
 const nextAuthConfig: NextAuthConfig = {
-  theme: {
-    logo: "/next.svg",
-  },
   providers: [
     Okta({
       issuer: `${process.env.NEXT_PUBLIC_AUTH_OKTA_ISSUER}/oauth2/default`,
