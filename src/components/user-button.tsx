@@ -16,11 +16,7 @@ import {
 import { redirect } from "next/navigation";
 import { signOut } from "@/lib/auth";
 
-interface UserButtonProps {
-  user: User;
-}
-
-export function UserButton({ user }: UserButtonProps) {
+export function UserButton({ user }: { user: User }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
@@ -54,35 +50,18 @@ export function UserButton({ user }: UserButtonProps) {
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
-          {/* Client-side
-          <button
-            className="flex w-full items-center"
-            onClick={() => {
-              signOut({
-                redirect: false,
-              });
-              redirect(
-                `${process.env.NEXT_PUBLIC_AUTH_OKTA_ISSUER}/login/signout?fromURI=${process.env.NEXT_PUBLIC_SITE_URL}`
-              );
-            }}
-          >
-            <LogOut className="mr-2 h-4 w-4" /> Sign Out
-          </button> */}
-          {/* Server-side */}
           <form
             action={async () => {
               "use server";
               await signOut({
                 redirect: false,
               }).then(() => {
-                redirect(
-                  `${process.env.NEXT_PUBLIC_AUTH_OKTA_ISSUER}/login/signout?fromURI=${process.env.NEXT_PUBLIC_SITE_URL}`
-                );
+                redirect(`${process.env.AUTH_OKTA_REDIRECT_URL}`);
               });
             }}
           >
             <button type="submit" className="flex w-full items-center">
-              <LogOut className="mr-2 h-4 w-4" /> Sign Out
+              <LogOut className="mr-2 size-4" /> Sign Out
             </button>
           </form>
         </DropdownMenuItem>
@@ -90,3 +69,16 @@ export function UserButton({ user }: UserButtonProps) {
     </DropdownMenu>
   );
 }
+
+//Client-side button
+//button
+// className="flex w-full items-center"
+// onClick={() => {
+//   signOut({
+//     redirect: false,
+//   });
+//   redirect(`${process.env.AUTH_OKTA_REDIRECT_URL}`);
+// }}
+//
+// <LogOut className="mr-2 h-4 w-4" /> Sign Out
+//</button> */

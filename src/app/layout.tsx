@@ -4,7 +4,6 @@ import Sidebar from "./_components/sidebar";
 import { ThemeProvider } from "./_components/theme-provider";
 import "./globals.css";
 import ClientRootLayout from "./_components/client-root-layout";
-//import { SessionProvider } from "next-auth/react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,7 +21,6 @@ export default function RootLayout({
     <html lang="en" suppressHydrationWarning>
       <head />
       <body className={inter.className}>
-        {/* <SessionProvider> */}
         <ClientRootLayout>
           <ThemeProvider>
             <div className="flex-row flex">
@@ -31,7 +29,6 @@ export default function RootLayout({
             </div>
           </ThemeProvider>
         </ClientRootLayout>
-        {/* </SessionProvider> */}
       </body>
     </html>
   );
