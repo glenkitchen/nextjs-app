@@ -3,12 +3,14 @@ import getSession from "./get-session";
 class WebApi {
   private baseUrl = process.env.NEXT_PUBLIC_WEB_API_URL;
 
-  public getRowData = async (url: string) => {
+  private getHeaders = async () => {
     const session = await getSession();
+    return { Authorization: `Bearer ${session?.access_token}` };
+  };
 
+  public getRowData = async (url: string) => {
     const response = await fetch(`${this.baseUrl}${url}`, {
-      headers: { Authorization: `Bearer ${session?.access_token}` },
-      cache: "no-cache",
+      headers: await this.getHeaders(),
     });
 
     if (!response.ok) {
@@ -20,7 +22,9 @@ class WebApi {
   };
 
   public getData = async (url: string) => {
-    const response = await fetch(`${this.baseUrl}${url}`);
+    const response = await fetch(`${this.baseUrl}${url}`, {
+      headers: await this.getHeaders(),
+    });
 
     if (!response.ok) {
       throw new Error(`HTTP getData. Status: ${response.status}`);

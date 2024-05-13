@@ -42,7 +42,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 async function refreshAccessToken(token: JWT): Promise<JWT> {
   try {
     const url =
-      `${process.env.AUTH_OKTA_ISSUER}/oauth2/default/v1/token?` +
+      `${process.env.AUTH_OKTA_ISSUER}/v1/token?` +
       new URLSearchParams({
         grant_type: "refresh_token",
         refresh_token: token.refresh_token ?? "",
