@@ -6,12 +6,8 @@ class WebApi {
   public getRowData = async (url: string) => {
     const session = await getSession();
 
-    const headers: HeadersInit = {
-      Authorization: `Bearer ${session?.access_token}`,
-    };
-
     const response = await fetch(`${this.baseUrl}${url}`, {
-      headers,
+      headers: { Authorization: `Bearer ${session?.access_token}` },
       cache: "no-cache",
     });
 
