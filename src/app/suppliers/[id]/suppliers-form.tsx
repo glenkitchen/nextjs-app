@@ -10,8 +10,8 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { useFormAction } from "@/hooks/use-form-action";
 import { useWebApi } from "@/hooks/use-web-api";
-import { formAction } from "@/utils/form-action";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
@@ -41,14 +41,13 @@ export default function SuppliersForm() {
     }
   }, [data, form, params.id]);
 
+  const { formAction } = useFormAction();
+
   const onSubmit = useCallback(
     async (data: any) => {
+      console.log("🚀 ~ data:", data);
       const result = await formAction("supplier", data, {
         formId: params.id,
-        revalidatePaths: [
-          "/suppliers",
-          { originalPath: "/suppliers/[id]", type: "page" },
-        ],
       });
 
       if (result?.success) {
@@ -59,7 +58,7 @@ export default function SuppliersForm() {
         throw new Error(result?.error);
       }
     },
-    [params.id, router]
+    [formAction, params.id, router]
   );
 
   return (
