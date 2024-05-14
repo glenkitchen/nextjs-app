@@ -36,7 +36,7 @@ export default function WarehousesForm({ data }: { data: any }) {
         revalidatePath: "/warehouses",
       });
 
-      if (result.success) {
+      if (result?.success) {
         console.log("Success");
         router.back();
       }

@@ -1,16 +1,12 @@
+import { getAuthHeader } from "./get-auth-header";
 import getSession from "./get-session";
 
 class WebApi {
   private baseUrl = process.env.NEXT_PUBLIC_WEB_API_URL;
 
-  private getHeaders = async () => {
-    const session = await getSession();
-    return { Authorization: `Bearer ${session?.access_token}` };
-  };
-
   public getRowData = async (url: string) => {
     const response = await fetch(`${this.baseUrl}${url}`, {
-      headers: await this.getHeaders(),
+      headers: await getAuthHeader(),
     });
 
     if (!response.ok) {
@@ -24,7 +20,7 @@ class WebApi {
 
   public getData = async (url: string) => {
     const response = await fetch(`${this.baseUrl}${url}`, {
-      headers: await this.getHeaders(),
+      headers: await getAuthHeader(),
     });
 
     if (!response.ok) {
