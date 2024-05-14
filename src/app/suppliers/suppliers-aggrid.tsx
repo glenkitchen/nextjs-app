@@ -70,7 +70,7 @@ export default function SuppliersAggrid() {
   );
 
   return (
-    <div className="ag-theme-quartz h-[85vh]">
+    <div className="ag-theme-quartz h-[40vh] flex flex-col">
       <div className="flex flex-row p-2">
         <Link href="/suppliers/add">
           <Button>Add Supplier</Button>
