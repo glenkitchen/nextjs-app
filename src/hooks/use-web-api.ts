@@ -1,18 +1,14 @@
 "use client";
 
-import { useSession } from "next-auth/react";
+import { useAuthHeader } from "./use-auth-header";
 
 export const useWebApi = () => {
   const baseUrl = process.env.NEXT_PUBLIC_WEB_API_URL;
-  const session = useSession();
-
-  const getHeaders = async () => {
-    return { Authorization: `Bearer ${session?.data?.access_token}` };
-  };
+  const headers = useAuthHeader();
 
   const getRowData = async (url: string) => {
     const response = await fetch(`${baseUrl}${url}`, {
-      headers: await getHeaders(),
+      headers,
     });
 
     if (!response.ok) {
@@ -26,7 +22,7 @@ export const useWebApi = () => {
 
   const getData = async (url: string) => {
     const response = await fetch(`${baseUrl}${url}`, {
-      headers: await getHeaders(),
+      headers,
     });
 
     if (!response.ok) {
@@ -38,5 +34,24 @@ export const useWebApi = () => {
     return json || {};
   };
 
-  return { getRowData, getData };
+  const post = async (url: string, data: any) => {
+    const response = await fetch(`${baseUrl}${url}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        ...headers,
+      },
+      body: JSON.stringify(data),
+    });
+
+    if (!response.ok) {
+      console.error(`HTTP post. Status: ${response.status}`);
+      throw new Error(`HTTP post. Status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    return json || {};
+  };
+
+  return { getRowData, getData, post };
 };
