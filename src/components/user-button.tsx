@@ -53,11 +53,8 @@ export function UserButton({ user }: { user: User }) {
           <form
             action={async () => {
               "use server";
-              await signOut({
-                redirect: false,
-              }).then(() => {
-                redirect(`${process.env.AUTH_OKTA_REDIRECT_URL}`);
-              });
+              await signOut({ redirect: false });
+              redirect(`${process.env.AUTH_OKTA_SIGNOUT_URL}`);
             }}
           >
             <button type="submit" className="flex w-full items-center">
@@ -69,16 +66,3 @@ export function UserButton({ user }: { user: User }) {
     </DropdownMenu>
   );
 }
-
-//Client-side button
-//button
-// className="flex w-full items-center"
-// onClick={() => {
-//   signOut({
-//     redirect: false,
-//   });
-//   redirect(`${process.env.AUTH_OKTA_REDIRECT_URL}`);
-// }}
-//
-// <LogOut className="mr-2 h-4 w-4" /> Sign Out
-//</button> */

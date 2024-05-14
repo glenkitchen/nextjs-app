@@ -14,6 +14,7 @@ class WebApi {
     });
 
     if (!response.ok) {
+      console.error(`HTTP getRowData. Status: ${response.status}`);
       throw new Error(`HTTP getRowData. Status: ${response.status}`);
     }
 
@@ -27,6 +28,7 @@ class WebApi {
     });
 
     if (!response.ok) {
+      console.error(`HTTP getData. Status: ${response.status}`);
       throw new Error(`HTTP getData. Status: ${response.status}`);
     }
 
