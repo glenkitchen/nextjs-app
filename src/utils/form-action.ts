@@ -1,7 +1,7 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-import { getAuthHeader } from "./get-auth-header";
+//import { getAuthHeader } from "./get-auth-header";
 
 export const formAction = async (
   url: string,
@@ -16,7 +16,7 @@ export const formAction = async (
     method,
     headers: {
       "Content-Type": "application/json",
-      ...(await getAuthHeader()),
+      //...(await getAuthHeader()),
     },
     body: JSON.stringify(data),
   });
