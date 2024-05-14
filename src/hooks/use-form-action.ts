@@ -14,13 +14,10 @@ export const useFormAction = () => {
     data: any,
     options: FormActionOptions
   ) => {
-    console.log("🚀 ~ useFormAction ~ data:", data);
     const method = options.formId === "add" ? "POST" : "PUT";
-    console.log("🚀 ~ useFormAction ~ method:", method);
 
     const fullUrl = `${process.env.NEXT_PUBLIC_WEB_API_URL}${url}`;
 
-    console.log("🚀 ~ useFormAction ~ fullUrl:", fullUrl);
     const response = await fetch(fullUrl, {
       method,
       headers: {

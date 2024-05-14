@@ -45,7 +45,6 @@ export default function SuppliersForm() {
 
   const onSubmit = useCallback(
     async (data: any) => {
-      console.log("🚀 ~ data:", data);
       const result = await formAction("supplier", data, {
         formId: params.id,
       });

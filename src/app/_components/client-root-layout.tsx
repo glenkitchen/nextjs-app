@@ -19,13 +19,14 @@ export default function ClientRootLayout({
     },
   });
 
-  const queryClient = new QueryClient({
-    defaultOptions: {
-      queries: {
-        staleTime: Infinity,
-      },
-    },
-  });
+  // const queryClient = new QueryClient({
+  //   defaultOptions: {
+  //     queries: {
+  //       staleTime: Infinity,
+  //     },
+  //   },
+  // });
+  const queryClient = new QueryClient();
 
   return (
     <QueryClientProvider client={queryClient}>{children}</QueryClientProvider>
