@@ -7,19 +7,23 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-quartz.css";
 import { AgGridReact } from "ag-grid-react";
 import { Pencil } from "lucide-react";
-import Link from "next/link";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import WarehousesForm from "./warehouses-form";
 
 export default function WarehousesAgGrid({ rowData }: { rowData: any[] }) {
+  const [formId, setFormId] = useState<number | string | null>();
+
   const columnDefs: ColDef[] = useMemo(
     () => [
       {
         cellRenderer: (params: ICellRendererParams) => (
-          <Link href={`/warehouses/${params?.data?.id}`}>
-            <Button>
-              <Pencil />
-            </Button>
-          </Link>
+          <Button
+            onClick={() => {
+              setFormId(params?.data?.id);
+            }}
+          >
+            <Pencil />
+          </Button>
         ),
       },
       {
@@ -38,11 +42,10 @@ export default function WarehousesAgGrid({ rowData }: { rowData: any[] }) {
   return (
     <div className="ag-theme-quartz h-[90vh]">
       <div className="flex flex-row p-2">
-        <Link href="/warehouses/add">
-          <Button>Add Warehouse</Button>
-        </Link>
+        <Button onClick={() => setFormId("add")}>Add Warehouse</Button>
       </div>
       <AgGridReact columnDefs={columnDefs} rowData={rowData} />
+      {!!formId && <WarehousesForm formId={formId} setFormId={setFormId} />}
     </div>
   );
 }
