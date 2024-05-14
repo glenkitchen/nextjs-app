@@ -6,6 +6,7 @@ import "./globals.css";
 import ClientRootLayout from "./_components/client-root-layout";
 import { SessionProvider } from "next-auth/react";
 import getSession from "@/utils/get-session";
+import Header from "./_components/header";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,9 +29,12 @@ export default async function RootLayout({
         <SessionProvider session={session}>
           <ClientRootLayout>
             <ThemeProvider>
-              <div className="flex-row flex">
-                <Sidebar />
-                <main className="flex-grow p-4">{children}</main>
+              <div className="flex flex-col">
+                <Header session={session} />
+                <div className="flex-row flex">
+                  <Sidebar />
+                  <main className="flex-grow p-4">{children}</main>
+                </div>
               </div>
             </ThemeProvider>
           </ClientRootLayout>

@@ -4,6 +4,7 @@ import Okta from "next-auth/providers/okta";
 import { NextResponse } from "next/server";
 
 export const { handlers, auth, signIn, signOut } = NextAuth({
+  trustHost: true,
   providers: [Okta],
   callbacks: {
     async authorized({ request, auth }) {

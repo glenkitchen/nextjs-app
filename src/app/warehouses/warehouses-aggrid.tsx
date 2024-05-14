@@ -36,7 +36,7 @@ export default function WarehousesAgGrid({ rowData }: { rowData: any[] }) {
   );
 
   return (
-    <div className="ag-theme-quartz h-[90vh]">
+    <div className="ag-theme-quartz h-[85vh]">
       <div className="flex flex-row p-2">
         <Link href="/warehouses/add">
           <Button>Add Warehouse</Button>
