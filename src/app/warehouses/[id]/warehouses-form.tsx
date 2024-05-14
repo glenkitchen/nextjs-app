@@ -18,6 +18,7 @@ import {
 } from "@/components/ui/sheet";
 import { useFormAction } from "@/hooks/use-form-action";
 import { useWebApi } from "@/hooks/use-web-api";
+import { formAction } from "@/utils/form-action";
 import { revalidatePath } from "@/utils/revalidate-path";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
@@ -48,16 +49,20 @@ export default function WarehousesForm() {
     }
   }, [data, form, params.id]);
 
-  const { formAction } = useFormAction();
+  //const { formAction } = useFormAction();
 
   const onSubmit = useCallback(
     async (data: any) => {
       const result = await formAction("distributioncenter", data, {
         formId: params.id,
+        revalidatePaths: [
+          "/warehouses",
+          { originalPath: "/warehouses/[id]", type: "page" },
+        ],
       });
 
       if (result?.success) {
-        revalidatePath("/warehouses");
+        //revalidatePath("/warehouses");
         console.log("Success");
         router.push("/warehouses");
       } else {
@@ -65,7 +70,7 @@ export default function WarehousesForm() {
         throw new Error(result?.error);
       }
     },
-    [formAction, params.id, router]
+    [params.id, router]
   );
 
   return (
