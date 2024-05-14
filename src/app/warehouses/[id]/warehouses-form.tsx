@@ -33,12 +33,18 @@ export default function WarehousesForm({ data }: { data: any }) {
     async (data: any) => {
       const result = await formAction("distributioncenter", data, {
         formId: params.id,
-        revalidatePath: "/warehouses",
+        revalidatePaths: [
+          "/warehouses",
+          { originalPath: "/warehouses/[id]", type: "page" },
+        ],
       });
 
       if (result?.success) {
         console.log("Success");
         router.back();
+      } else {
+        console.log(result?.error);
+        throw new Error(result?.error);
       }
     },
     [params.id, router]

@@ -1,12 +1,20 @@
 "use server";
 
 import { revalidatePath } from "next/cache";
-//import { getAuthHeader } from "./get-auth-header";
+import { getAuthHeader } from "./get-auth-header";
+
+interface FormActionOptions {
+  formId?: number | string | null;
+  revalidatePaths?: (
+    | string
+    | { originalPath: string; type?: "layout" | "page" }
+  )[];
+}
 
 export const formAction = async (
   url: string,
   data: any,
-  options: { formId?: number | string | null; revalidatePath?: string }
+  options: FormActionOptions
 ) => {
   const method = options.formId === "add" ? "POST" : "PUT";
 
@@ -16,23 +24,32 @@ export const formAction = async (
     method,
     headers: {
       "Content-Type": "application/json",
-      //...(await getAuthHeader()),
+      ...(await getAuthHeader()),
     },
     body: JSON.stringify(data),
   });
 
-  if (!response.ok) {
-    console.error(`HTTP formAction. Status: ${response.status}`);
-    throw new Error(`HTTP formAction. Status: ${response.status}`);
-  }
-
   if (response.ok) {
-    if (options.revalidatePath) {
-      revalidatePath(options.revalidatePath);
+    if (
+      Array.isArray(options.revalidatePaths) &&
+      options.revalidatePaths.length > 0
+    ) {
+      options.revalidatePaths.forEach((path) => {
+        if (typeof path === "string") {
+          revalidatePath(path);
+        } else if (path?.originalPath) {
+          revalidatePath(path.originalPath, path.type || "page");
+        }
+      });
     }
 
-    return { success: true };
+    return {
+      success: true,
+    };
   } else {
-    return { success: false };
+    return {
+      success: false,
+      error: `HTTP formAction. Status: ${response.status}`,
+    };
   }
 };
