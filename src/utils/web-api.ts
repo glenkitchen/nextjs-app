@@ -12,6 +12,7 @@ class WebApi {
     const response = await fetch(`${this.baseUrl}${url}`, {
       headers: await getAuthHeader(),
       cache: "force-cache",
+      next: { tags: [url] },
     });
 
     if (!response.ok) {
@@ -26,6 +27,7 @@ class WebApi {
     const response = await fetch(`${this.baseUrl}${url}`, {
       headers: await getAuthHeader(),
       cache: "force-cache",
+      next: { tags: [url] },
     });
 
     if (!response.ok) {

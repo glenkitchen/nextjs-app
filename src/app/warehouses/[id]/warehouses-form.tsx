@@ -51,10 +51,6 @@ export default function WarehousesForm() {
     async (data: any) => {
       const result = await formAction("distributioncenter", data, {
         formId: params.id,
-        revalidatePaths: [
-          "/warehouses",
-          { originalPath: "/warehouses/[id]", type: "page" },
-        ],
       });
 
       if (result?.success) {
