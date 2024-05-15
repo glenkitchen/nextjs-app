@@ -1,7 +1,9 @@
 import { getAuthHeader } from "./get-auth-header";
 
 class WebApi {
-  private baseUrl = process.env.NEXT_PUBLIC_WEB_API_URL;
+  private getUrl = (url: string) => {
+    return `${process.env.NEXT_PUBLIC_WEB_API_URL}${url}`;
+  };
 
   private throwError = (message: string) => {
     console.error(message);
@@ -9,7 +11,7 @@ class WebApi {
   };
 
   public getRowData = async <TData>(url: string) => {
-    const response = await fetch(`${this.baseUrl}${url}`, {
+    const response = await fetch(this.getUrl(url), {
       headers: await getAuthHeader(),
       cache: "force-cache",
       next: { tags: [url] },
@@ -24,7 +26,7 @@ class WebApi {
   };
 
   public getData = async <TData>(url: string) => {
-    const response = await fetch(`${this.baseUrl}${url}`, {
+    const response = await fetch(this.getUrl(url), {
       headers: await getAuthHeader(),
       cache: "force-cache",
       next: { tags: [url] },

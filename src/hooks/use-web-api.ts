@@ -3,8 +3,11 @@
 import { useAuthHeader } from "./use-auth-header";
 
 export const useWebApi = () => {
-  const baseUrl = process.env.NEXT_PUBLIC_WEB_API_URL;
   const headers = useAuthHeader();
+
+  const getUrl = (url: string) => {
+    return `${process.env.NEXT_PUBLIC_WEB_API_URL}${url}`;
+  };
 
   const throwError = (message: string) => {
     console.error(message);
@@ -12,8 +15,9 @@ export const useWebApi = () => {
   };
 
   const getRowData = async <TData>(url: string) => {
-    const response = await fetch(`${baseUrl}${url}`, {
+    const response = await fetch(getUrl(url), {
       headers,
+      next: { tags: [url] },
     });
 
     if (!response.ok) {
@@ -25,8 +29,9 @@ export const useWebApi = () => {
   };
 
   const getData = async <TData>(url: string) => {
-    const response = await fetch(`${baseUrl}${url}`, {
+    const response = await fetch(getUrl(url), {
       headers,
+      next: { tags: [url] },
     });
 
     if (!response.ok) {
@@ -38,7 +43,7 @@ export const useWebApi = () => {
   };
 
   const post = async (url: string, data: any) => {
-    const response = await fetch(`${baseUrl}${url}`, {
+    const response = await fetch(getUrl(url), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
