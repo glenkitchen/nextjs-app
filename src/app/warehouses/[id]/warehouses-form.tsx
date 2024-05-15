@@ -105,12 +105,15 @@ export default function WarehousesForm() {
                   </FormItem>
                 )}
               />
-
-              <Button>Save</Button>
+              <SubmitButton />
             </form>
           </Form>
         </SheetHeader>
       </SheetContent>
     </Sheet>
   );
+}
+
+function SubmitButton() {
+  return <Button type="submit">Save</Button>;
 }
