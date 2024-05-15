@@ -16,10 +16,8 @@ import {
   SheetHeader,
   SheetTitle,
 } from "@/components/ui/sheet";
-import { useFormAction } from "@/hooks/use-form-action";
 import { useWebApi } from "@/hooks/use-web-api";
 import { formAction } from "@/utils/form-action";
-import { revalidatePath } from "@/utils/revalidate-path";
 import { useQuery } from "@tanstack/react-query";
 import { useParams, useRouter } from "next/navigation";
 import { useCallback, useEffect } from "react";
@@ -28,8 +26,6 @@ import { useForm } from "react-hook-form";
 export default function WarehousesForm() {
   const params = useParams<{ id: string }>();
   const router = useRouter();
-
-  const form = useForm();
 
   const webApi = useWebApi();
 
@@ -41,6 +37,8 @@ export default function WarehousesForm() {
     enabled: !!params.id,
   });
 
+  const form = useForm();
+
   useEffect(() => {
     if (params.id === "add") {
       form.reset({ code: "", name: "" });
@@ -48,8 +46,6 @@ export default function WarehousesForm() {
       form.reset(data);
     }
   }, [data, form, params.id]);
-
-  //const { formAction } = useFormAction();
 
   const onSubmit = useCallback(
     async (data: any) => {
@@ -62,7 +58,6 @@ export default function WarehousesForm() {
       });
 
       if (result?.success) {
-        //revalidatePath("/warehouses");
         console.log("Success");
         router.push("/warehouses");
       } else {
