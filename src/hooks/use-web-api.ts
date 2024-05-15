@@ -6,32 +6,35 @@ export const useWebApi = () => {
   const baseUrl = process.env.NEXT_PUBLIC_WEB_API_URL;
   const headers = useAuthHeader();
 
-  const getRowData = async (url: string) => {
-    const response = await fetch(`${baseUrl}${url}`, {
-      headers,
-    });
-
-    if (!response.ok) {
-      console.error(`HTTP getRowData. Status: ${response.status}`);
-      throw new Error(`HTTP getRowData. Status: ${response.status}`);
-    }
-
-    const json = await response.json();
-    return json?.data || [];
+  const throwError = (message: string) => {
+    console.error(message);
+    throw new Error(message);
   };
 
-  const getData = async (url: string) => {
+  const getRowData = async <TData>(url: string) => {
     const response = await fetch(`${baseUrl}${url}`, {
       headers,
     });
 
     if (!response.ok) {
-      console.error(`HTTP getData. Status: ${response.status}`);
-      throw new Error(`HTTP getData. Status: ${response.status}`);
+      throwError(`getRowData. Status: ${response.status}`);
     }
 
     const json = await response.json();
-    return json || {};
+    return json?.data as TData[];
+  };
+
+  const getData = async <TData>(url: string) => {
+    const response = await fetch(`${baseUrl}${url}`, {
+      headers,
+    });
+
+    if (!response.ok) {
+      throwError(`getData. Status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    return json as TData;
   };
 
   const post = async (url: string, data: any) => {

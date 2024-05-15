@@ -3,34 +3,37 @@ import { getAuthHeader } from "./get-auth-header";
 class WebApi {
   private baseUrl = process.env.NEXT_PUBLIC_WEB_API_URL;
 
-  public getRowData = async (url: string) => {
-    const response = await fetch(`${this.baseUrl}${url}`, {
-      headers: await getAuthHeader(),
-      cache: "force-cache",
-    });
-
-    if (!response.ok) {
-      console.error(`HTTP getRowData. Status: ${response.status}`);
-      throw new Error(`HTTP getRowData. Status: ${response.status}`);
-    }
-
-    const json = await response.json();
-    return json?.data || [];
+  private throwError = (message: string) => {
+    console.error(message);
+    throw new Error(message);
   };
 
-  public getData = async (url: string) => {
+  public getRowData = async <TData>(url: string) => {
     const response = await fetch(`${this.baseUrl}${url}`, {
       headers: await getAuthHeader(),
       cache: "force-cache",
     });
 
     if (!response.ok) {
-      console.error(`HTTP getData. Status: ${response.status}`);
-      throw new Error(`HTTP getData. Status: ${response.status}`);
+      this.throwError(`getRowData. Status: ${response.status}`);
     }
 
     const json = await response.json();
-    return json || {};
+    return json?.data as TData[];
+  };
+
+  public getData = async <TData>(url: string) => {
+    const response = await fetch(`${this.baseUrl}${url}`, {
+      headers: await getAuthHeader(),
+      cache: "force-cache",
+    });
+
+    if (!response.ok) {
+      this.throwError(`getData. Status: ${response.status}`);
+    }
+
+    const json = await response.json();
+    return json as TData;
   };
 }
 
