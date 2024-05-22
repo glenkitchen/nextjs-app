@@ -8,7 +8,7 @@ export default defineConfig({
   schema: "./src/db/schema.ts",
   driver: "pg",
   dbCredentials: {
-    connectionString: process.env.DATABASE_URL!,
+    connectionString: process.env.NEON_DATABASE_URL!,
   },
   verbose: true,
   strict: true,
